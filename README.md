@@ -10,4 +10,4 @@ Graphics drivers:
 - [Adafruit ST7789](https://github.com/adafruit/Adafruit-ST7735-Library/)
 - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
 - [ST7789-STM32](https://github.com/Floyd-Fish/ST7789-STM32)
-- [ST7789-STM32-uGUI](https://github.com/deividAlfa/ST7789-STM32-uGUI])
+- [ST7789-STM32-uGUI](https://github.com/deividAlfa/ST7789-STM32-uGUI)
