@@ -2,7 +2,7 @@
 
 This is an Arduino library for the cst816t capacitive touch ic.  The cst816t capacitive touch ic is able to decode clicks, double clicks, swipes and long press in hardware.
 
-The library contains three example Arduino sketches: touchme, smartwatch, and lvgl.
+The library comes with three example Arduino sketches: touchme, smartwatch, and lvgl.
 
 ## touchme
 
