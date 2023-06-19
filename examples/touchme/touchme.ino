@@ -11,10 +11,10 @@ cst816t touchpad(Wire2, TP_RST, TP_IRQ);
 
 void setup() {
   touchpad.begin();
-  Serial.print(touchpad.version());
+  Serial.println(touchpad.version());
 }
 
 void loop() {
   if (touchpad.available())
-    Serial.print(touchpad.state());
+    Serial.println(touchpad.state());
 }

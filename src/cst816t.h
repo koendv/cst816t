@@ -21,8 +21,15 @@
 
 class cst816t {
 public:
-  cst816t(TwoWire &_wire, uint32_t _rst, uint32_t _irq);
+  cst816t(TwoWire &_wire, int8_t _rst, int8_t _irq);
   void begin();
+  /*
+     enable_touch: periodically interrupt when a touch is detected
+     enable_change: interrupt when a touch change is detected
+     enable_motion: interrupt when a gesture is detected
+     enable_long_press: interrupt when a long press is detected
+  */
+  void enable(bool enable_touch, bool enable_change, bool enable_motion, bool enable_long_press);
   bool available();
   String version();
   String state();
@@ -34,8 +41,8 @@ public:
   uint16_t y;
 private:
   TwoWire wire;
-  uint32_t rst;
-  uint32_t irq;
+  int8_t rst;
+  int8_t irq;
   uint8_t i2c_read(uint16_t addr, uint8_t reg_addr, uint8_t *reg_data, uint32_t length);
   uint8_t i2c_write(uint8_t addr, uint8_t reg_addr, const uint8_t *reg_data, uint32_t length);
 };

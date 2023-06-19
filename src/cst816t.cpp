@@ -30,12 +30,17 @@
 #define MOTION_MASK_CONTINUOUS_UP_DOWN 0b010
 #define MOTION_MASK_DOUBLE_CLICK 0b001
 
+#define IRQ_EN_TOUCH 0x40
+#define IRQ_EN_CHANGE 0x20
+#define IRQ_EN_MOTION 0x10
+#define IRQ_EN_LONGPRESS 0x01
+
 static bool tp_event = false;
 static void tp_isr() {
   tp_event = true;
 }
 
-cst816t::cst816t(TwoWire &_wire, uint32_t _rst, uint32_t _irq)
+cst816t::cst816t(TwoWire &_wire, int8_t _rst, int8_t _irq)
   : wire(_wire) {
   rst = _rst;
   irq = _irq;
@@ -51,13 +56,15 @@ cst816t::cst816t(TwoWire &_wire, uint32_t _rst, uint32_t _irq)
 void cst816t::begin() {
   uint8_t dta[4];
   pinMode(irq, INPUT);
-  pinMode(rst, OUTPUT);
-  digitalWrite(rst, HIGH);
-  delay(100);
-  digitalWrite(rst, LOW);
-  delay(10);
-  digitalWrite(rst, HIGH);
-  delay(100);
+  if (rst >= 0) {
+    pinMode(rst, OUTPUT);
+    digitalWrite(rst, HIGH);
+    delay(100);
+    digitalWrite(rst, LOW);
+    delay(10);
+    digitalWrite(rst, HIGH);
+    delay(100);
+  }
   wire.begin();
   if (i2c_read(CST816T_ADDRESS, REG_CHIP_ID, dta, sizeof(dta)))
     Serial.println("i2c error");
@@ -75,9 +82,18 @@ void cst816t::begin() {
 #endif
 
   // interrupt on gesture and long press
-  uint8_t irq_en = 0x11;
+  uint8_t irq_en = IRQ_EN_MOTION | IRQ_EN_LONGPRESS;
   i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
   attachInterrupt(digitalPinToInterrupt(irq), tp_isr, FALLING);
+}
+
+void cst816t::enable(bool enable_touch, bool enable_change, bool enable_motion, bool enable_long_press) {
+  uint8_t irq_en = 0;
+  if (enable_touch) irq_en |= IRQ_EN_TOUCH;
+  if (enable_change) irq_en |= IRQ_EN_CHANGE;
+  if (enable_motion) irq_en |= IRQ_EN_MOTION;
+  if (enable_long_press) irq_en |= IRQ_EN_LONGPRESS;
+  i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
 }
 
 bool cst816t::available() {
@@ -157,7 +173,7 @@ String cst816t::state() {
       s = "LONG PRESS";
       break;
     default:
-      s ="UNKNOWN 0x";
+      s = "UNKNOWN 0x";
       s += String(gesture_id, HEX);
       break;
   }
