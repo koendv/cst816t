@@ -1,3 +1,5 @@
+/* demo for the CST816T capacitive touch ic */
+
 #include <Wire.h>
 #include "cst816t.h"
 

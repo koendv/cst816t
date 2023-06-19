@@ -1,3 +1,7 @@
+/*
+ demo of P168H002-CTP display.
+ */
+
 #include <SPI.h>
 #include <Adafruit_GFX.h>     // Core graphics library
 #include <Adafruit_ST7789.h>  // Hardware-specific library for ST7789
