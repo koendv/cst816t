@@ -21,7 +21,7 @@ In mode touch, if a finger touches the display the ic sends an interrupt every 1
 ```
 touchpad.begin(mode_change);
 ```
-In mode change the ic sends an interrupt when the finger changes position.
+In mode change the ic sends an interrupt when the finger changes position. Compared to mode touch, the number of interrupts is more moderate.
 
 - mode fast
 
@@ -44,7 +44,8 @@ In mode _motion_ the ic sends an interrupt when the finger has completed the fol
 The program can test if the display has been touched:
 
 ```
-if (touchpad.available() && (touchpad.gesture == GESTURE_SINGLE_CLICK)) {
+if (touchpad.available()) {
+	if (touchpad.gesture == GESTURE_SINGLE_CLICK) Serial.print("click at ");
 	Serial.print(touchpad.x);
 	Serial.print(' ');
 	Serial.print(touchpad.y);
@@ -83,6 +84,7 @@ Arduino libraries for ST7789 tft driver:
 
 
 [Schematic](extras/Schematic_drawing_2023-06-21.pdf
-) for the P169H002-CTP display
+) for the P169H002-CTP display. VCC = 3.3V.
 
 The P169H002-CTP display is available from [Aliexpress](https://www.aliexpress.com/item/1005005238299349.html).
+G
