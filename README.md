@@ -37,8 +37,7 @@ In mode _fast_ the ic sends an interrupt when the finger has completed the follo
 touchpad.begin(mode_motion);
 ```
 
-Mode _motion_ adds two more movements: double click and long press.
-In mode _motion_ the ic sends an interrupt when the finger has completed the following movements: single click, double click, swipe up, swipe down, swipe left, swipe right, long press. All processing is done on the cst816 touch ic.
+In mode _motion_ the ic sends an interrupt when the finger has completed the following movements: single click, **double click**, swipe up, swipe down, swipe left, swipe right, **long press**. All processing is done in the cst816 touch ic. The processing in the mcu is minimal.
 
 
 The program can test if the display has been touched:
@@ -71,8 +70,6 @@ A small Arduino sketch for the [P169H002-CTP](https://www.google.com/search?q=P1
 [LVGL](http://www.lvgl.io) (Light and Versatile Graphics Library) is a graphics library for embedded systems. An Arduino sketch is given which draws a button on a P169H002-CTP display.
 
 This lvgl example uses the Adafruit GFX library. For improved speed, you may wish to check if there is a library that is more optimized for the processor you use.
-
-The lvgl sketch decodes the touchpad in software. If your user interface consists of only clicks, double clicks, long press and swipes, you might consider using CST816T hardware support instead.
 
 ## Links
 Arduino libraries for ST7789 tft driver:
