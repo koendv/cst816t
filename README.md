@@ -87,4 +87,3 @@ Arduino libraries for ST7789 tft driver:
 ) for the P169H002-CTP display. VCC = 3.3V.
 
 The P169H002-CTP display is available from [Aliexpress](https://www.aliexpress.com/item/1005005238299349.html).
-G
