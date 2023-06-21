@@ -81,4 +81,8 @@ Arduino libraries for ST7789 tft driver:
 - [ST7789-STM32](https://github.com/Floyd-Fish/ST7789-STM32)
 - [ST7789-STM32-uGUI](https://github.com/deividAlfa/ST7789-STM32-uGUI)
 
+
+[Schematic](extras/Schematic_drawing_2023-06-21.pdf
+) for the P169H002-CTP display
+
 The P169H002-CTP display is available from [Aliexpress](https://www.aliexpress.com/item/1005005238299349.html).
