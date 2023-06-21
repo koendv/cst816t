@@ -12,7 +12,8 @@ TwoWire Wire2(TP_SDA, TP_SCL);
 cst816t touchpad(Wire2, TP_RST, TP_IRQ);
 
 void setup() {
-  touchpad.begin();
+  // decode everything: single click, double click, long press, swipe up, swipe down, swipe left, swipe right
+  touchpad.begin(mode_motion);
   Serial.println(touchpad.version());
 }
 

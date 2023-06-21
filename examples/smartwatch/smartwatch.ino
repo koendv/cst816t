@@ -45,7 +45,7 @@ void setup() {
   tft.setTextSize(0);
   tft.setRotation(2);
 
-  touchpad.begin();
+  touchpad.begin(mode_motion);
   tft.setCursor(TFT_X / 2, TFT_Y / 2);
   tft.println(touchpad.version());
 }

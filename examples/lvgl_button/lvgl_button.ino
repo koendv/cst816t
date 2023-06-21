@@ -94,8 +94,7 @@ void setup() {
   tft.setTextColor(ST77XX_WHITE);
   tft.setRotation(2);
 
-  touchpad.begin();
-  touchpad.enable(false, true, false, false);  // track finger movement
+  touchpad.begin(mode_change);
 
   /* display */
   lv_init();

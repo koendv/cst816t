@@ -19,17 +19,21 @@
 #define GESTURE_DOUBLE_CLICK 0x0B
 #define GESTURE_LONG_PRESS 0x0C
 
+typedef enum touchpad_mode { mode_touch,
+                             mode_change,
+                             mode_fast,
+                             mode_motion };
+
 class cst816t {
 public:
   cst816t(TwoWire &_wire, int8_t _rst, int8_t _irq);
-  void begin();
   /*
-     enable_touch: periodically interrupt when a touch is detected
-     enable_change: interrupt when a touch change is detected
-     enable_motion: interrupt when a gesture is detected
-     enable_long_press: interrupt when a long press is detected
+     mode_touch: interrupt every 10ms when a touch is detected
+     mode_change: interrupt when a touch change is detected
+     mode_fast: interrupt when a click or swipe is detected
+     mode_motion: interrupt when a click, swipe, double click, or long press is detected
   */
-  void enable(bool enable_touch, bool enable_change, bool enable_motion, bool enable_long_press);
+  void begin(touchpad_mode tp_mode = mode_change);
   bool available();
   String version();
   String state();

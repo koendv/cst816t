@@ -53,7 +53,7 @@ cst816t::cst816t(TwoWire &_wire, int8_t _rst, int8_t _irq)
   y = 0;
 }
 
-void cst816t::begin() {
+void cst816t::begin(touchpad_mode tp_mode) {
   uint8_t dta[4];
   pinMode(irq, INPUT);
   if (rst >= 0) {
@@ -71,29 +71,29 @@ void cst816t::begin() {
   chip_id = dta[0];
   firmware_version = dta[3];
 
-  // set number of ticks for long press
-  uint8_t long_press_tick = 100;
-  i2c_write(CST816T_ADDRESS, REG_LONG_PRESS_TICK, &long_press_tick, 1);
-
-#if 0
-  // enable double click - slows down overall response to single click
-  uint8_t motion_mask = MOTION_MASK_DOUBLE_CLICK;
+  uint8_t irq_en = 0x0;
+  uint8_t motion_mask = 0x0;
+  switch (tp_mode) {
+    case mode_touch:
+      irq_en = IRQ_EN_TOUCH;
+      break;
+    case mode_change:
+      irq_en = IRQ_EN_CHANGE;
+      break;
+    case mode_fast:
+      irq_en = IRQ_EN_MOTION;
+      break;
+    case mode_motion:
+      irq_en = IRQ_EN_MOTION | IRQ_EN_LONGPRESS;
+      motion_mask = MOTION_MASK_DOUBLE_CLICK;
+      break;
+    default:
+      break;
+  }
+  i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
   i2c_write(CST816T_ADDRESS, REG_MOTION_MASK, &motion_mask, 1);
-#endif
 
-  // interrupt on gesture and long press
-  uint8_t irq_en = IRQ_EN_MOTION | IRQ_EN_LONGPRESS;
-  i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
   attachInterrupt(digitalPinToInterrupt(irq), tp_isr, FALLING);
-}
-
-void cst816t::enable(bool enable_touch, bool enable_change, bool enable_motion, bool enable_long_press) {
-  uint8_t irq_en = 0;
-  if (enable_touch) irq_en |= IRQ_EN_TOUCH;
-  if (enable_change) irq_en |= IRQ_EN_CHANGE;
-  if (enable_motion) irq_en |= IRQ_EN_MOTION;
-  if (enable_long_press) irq_en |= IRQ_EN_LONGPRESS;
-  i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
 }
 
 bool cst816t::available() {
