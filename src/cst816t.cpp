@@ -25,6 +25,7 @@
 #define REG_IRQ_CTL 0xFA
 #define REG_LONG_PRESS_TICK 0xEB
 #define REG_MOTION_MASK 0xEC
+#define REG_DIS_AUTOSlEEP 0xFE
 
 #define MOTION_MASK_CONTINUOUS_LEFT_RIGHT 0b100
 #define MOTION_MASK_CONTINUOUS_UP_DOWN 0b010
@@ -94,6 +95,10 @@ void cst816t::begin(touchpad_mode tp_mode) {
   i2c_write(CST816T_ADDRESS, REG_MOTION_MASK, &motion_mask, 1);
 
   attachInterrupt(digitalPinToInterrupt(irq), tp_isr, FALLING);
+
+  // disable auto sleep
+  uint8_t dis_auto_sleep = 0xFF;
+  i2c_write(CST816T_ADDRESS, REG_DIS_AUTOSLEEP, &dis_auto_sleep, 1);
 }
 
 bool cst816t::available() {
