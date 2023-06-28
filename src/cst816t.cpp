@@ -1,4 +1,4 @@
-/* CS816T capacitive touch-screen driver.
+/* CST816T capacitive touch-screen driver.
  Koen De Vleeschauwer, 2023
  Literature:
  DS-CST816T-V2.2.pdf datasheet
