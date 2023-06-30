@@ -53,14 +53,44 @@ In mode _motion_ the ic sends an interrupt when the finger has completed the fol
 Test repeatedly if the display has been touched:
 
 ```
-if (touchpad.available()) {
-	if (touchpad.gesture == GESTURE_SINGLE_CLICK) Serial.print("click ");
-	Serial.print("at (");
-	Serial.print(touchpad.x);
-	Serial.print(", ");
-	Serial.print(touchpad.y);
-	Serial.print(") fingers: ");
-	Serial.println(touchpad.finger_num);
+void loop() {
+  if (touchpad.available()) {
+    switch (touchpad.gesture_id) {
+      case GESTURE_NONE:
+        Serial.print("NONE");
+        break;
+      case GESTURE_SWIPE_DOWN:
+        Serial.print("SWIPE DOWN");
+        break;
+      case GESTURE_SWIPE_UP:
+        Serial.print("SWIPE UP");
+        break;
+      case GESTURE_SWIPE_LEFT:
+        Serial.print("SWIPE LEFT");
+        break;
+      case GESTURE_SWIPE_RIGHT:
+        Serial.print("SWIPE RIGHT");
+        break;
+      case GESTURE_SINGLE_CLICK:
+        Serial.print("SINGLE CLICK");
+        break;
+      case GESTURE_DOUBLE_CLICK:
+        Serial.print("DOUBLE CLICK");
+        break;
+      case GESTURE_LONG_PRESS:
+        Serial.print("LONG PRESS");
+        break;
+      default:
+        Serial.print("UNKNOWN ");
+        break;
+    }
+    Serial.print("at (");
+    Serial.print(touchpad.x);
+    Serial.print(", ");
+    Serial.print(touchpad.y);
+    Serial.print(") fingers: ");
+    Serial.println(touchpad.finger_num);
+  }
 }
 ```
 
