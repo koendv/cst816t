@@ -7,6 +7,10 @@ This is an Arduino library for the cst816t capacitive touch ic.  The cst816t cap
 
 ## Use
 
+Code for the cst816t consists of a setup, done once, and a loop, done repeatedly.
+
+## Setup
+
 The cst816t touch sensor needs an I2C bus, a reset pin  and a interrupt pin:
 ```
 TwoWire Wire2(TP_SDA, TP_SCL);
@@ -44,16 +48,18 @@ touchpad.begin(mode_motion);
 
 In mode _motion_ the ic sends an interrupt when the finger has completed the following movements: single click, **double click**, swipe up, swipe down, swipe left, swipe right, **long press**. All processing is done in the cst816 touch ic. The processing in the mcu is minimal.
 
+## Loop
 
-The program can test if the display has been touched:
+Test repeatedly if the display has been touched:
 
 ```
 if (touchpad.available()) {
-	if (touchpad.gesture == GESTURE_SINGLE_CLICK) Serial.print("click at ");
+	if (touchpad.gesture == GESTURE_SINGLE_CLICK) Serial.print("click ");
+	Serial.print("at (");
 	Serial.print(touchpad.x);
-	Serial.print(' ');
+	Serial.print(", ");
 	Serial.print(touchpad.y);
-	Serial.print(' ');
+	Serial.print(") fingers: ");
 	Serial.println(touchpad.finger_num);
 }
 ```
