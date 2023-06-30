@@ -1,5 +1,8 @@
 # cst816t capacitive touch ic
 
+[![cst816t touch screen](extras/P169H002-CTP-small.jpg)](https://github.com/koendv/cst816t/raw/master/extras/P169H002-CTP.jpg)
+
+
 This is an Arduino library for the cst816t capacitive touch ic.  The cst816t capacitive touch ic is able to decode clicks, double clicks, swipes and long press in hardware.
 
 ## Use
@@ -11,19 +14,19 @@ cst816t touchpad(Wire2, TP_RST, TP_IRQ);
 ```
 The ic can run in four modes: touch, change, fast, motion.
 
-- mode touch
+### mode touch
 ```
 touchpad.begin(mode_touch);
 ```
 In mode touch, if a finger touches the display the ic sends an interrupt every 10ms. All processing is done on the mcu.
 
-- mode change
+### mode change
 ```
 touchpad.begin(mode_change);
 ```
 In mode change the ic sends an interrupt when the finger changes position. Compared to mode touch, the number of interrupts is more moderate.
 
-- mode fast
+### mode fast
 
 ```
 touchpad.begin(mode_fast);
@@ -31,7 +34,9 @@ touchpad.begin(mode_fast);
 
 In mode _fast_ the ic sends an interrupt when the finger has completed the following movements: single click, swipe up, swipe down, swipe left, swipe right.
 
-- mode motion
+Response is fast because there is no need to wait to distinguish between single click, double click and long press.
+
+### mode motion
 
 ```
 touchpad.begin(mode_motion);
