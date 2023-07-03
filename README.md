@@ -60,7 +60,7 @@ In mode _motion_ the ic sends an interrupt when the finger has completed the fol
 
 ## Loop
 
-Test repeatedly if there is an update from the touch panel. If there is an update from the touch panel, access gesture, (x, y) coordinates, and number of fingers touching the display.
+Test repeatedly if there is an update from the touch panel. If there is an update from the touch panel, read gesture, (x, y) coordinates, and number of fingers touching the display.
 
 ```
 void loop() {
