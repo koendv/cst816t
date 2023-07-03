@@ -26,7 +26,7 @@ void setup() {
   touchpad.begin(mode_touch);
 }
 ```
-In mode _touch_, if a finger touches the display the ic sends an interrupt and updates touch coordinates every 10ms. All processing is done on the mcu.
+In mode _touch_, if a finger touches the display the ic sends an interrupt every 10ms. After the interrupt, you can read updated touch coordinates and finger count. All processing is done on the mcu.
 
 ### mode change
 ```
