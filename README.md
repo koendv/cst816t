@@ -20,30 +20,38 @@ The ic can run in four modes: touch, change, fast, motion.
 
 ### mode touch
 ```
-touchpad.begin(mode_touch);
+void setup() {
+  touchpad.begin(mode_touch);
+}
 ```
 In mode touch, if a finger touches the display the ic sends an interrupt every 10ms. All processing is done on the mcu.
 
 ### mode change
 ```
-touchpad.begin(mode_change);
+void setup() {
+  touchpad.begin(mode_change);
+}
 ```
 In mode change the ic sends an interrupt when the finger changes position. Compared to mode touch, the number of interrupts is more moderate.
 
 ### mode fast
 
 ```
-touchpad.begin(mode_fast);
+void setup() {
+  touchpad.begin(mode_fast);
+}
 ```
 
 In mode _fast_ the ic sends an interrupt when the finger has completed the following movements: single click, swipe up, swipe down, swipe left, swipe right.
 
-Response is fast because there is no need to wait to distinguish between single click, double click and long press.
+Touch response is fast because there is no need to wait to distinguish between single click, double click and long press.
 
 ### mode motion
 
 ```
-touchpad.begin(mode_motion);
+void setup() {
+  touchpad.begin(mode_motion);
+}
 ```
 
 In mode _motion_ the ic sends an interrupt when the finger has completed the following movements: single click, **double click**, swipe up, swipe down, swipe left, swipe right, **long press**. All processing is done in the cst816 touch ic. The processing in the mcu is minimal.
