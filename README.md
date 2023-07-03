@@ -13,6 +13,8 @@ Code for the cst816t consists of a setup, done once, and a loop, done repeatedly
 
 The cst816t touch sensor needs an I2C bus, a reset pin  and a interrupt pin:
 ```
+#include <Wire.h>
+#include "cst816t.h"
 TwoWire Wire2(TP_SDA, TP_SCL);
 cst816t touchpad(Wire2, TP_RST, TP_IRQ);
 ```
@@ -24,7 +26,7 @@ void setup() {
   touchpad.begin(mode_touch);
 }
 ```
-In mode touch, if a finger touches the display the ic sends an interrupt every 10ms. All processing is done on the mcu.
+In mode _touch_, if a finger touches the display the ic sends an interrupt and updates touch coordinates every 10ms. All processing is done on the mcu.
 
 ### mode change
 ```
@@ -32,7 +34,7 @@ void setup() {
   touchpad.begin(mode_change);
 }
 ```
-In mode change the ic sends an interrupt when the finger changes position. Compared to mode touch, the number of interrupts is more moderate.
+In mode _change_ the ic sends an interrupt when the finger changes position. Compared to mode touch, the number of interrupts is more moderate.
 
 ### mode fast
 
@@ -58,7 +60,7 @@ In mode _motion_ the ic sends an interrupt when the finger has completed the fol
 
 ## Loop
 
-Test repeatedly if the display has been touched:
+Test repeatedly if there is an update from the touch panel. If there is an update from the touch panel, access gesture, (x, y) coordinates, and number of fingers touching the display.
 
 ```
 void loop() {
