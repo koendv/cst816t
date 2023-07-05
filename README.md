@@ -26,7 +26,7 @@ void setup() {
   touchpad.begin(mode_touch);
 }
 ```
-In mode _touch_, if a finger touches the display the ic sends an interrupt every 10ms. After the interrupt, you can read updated touch coordinates and finger count. All processing is done on the mcu.
+In mode _touch_, if a finger touches the display the ic sends an interrupt every 10ms. After receiving the interrupt, you can read updated touch coordinates and finger count. All processing is done on the mcu.
 
 ### mode change
 ```
@@ -44,7 +44,7 @@ void setup() {
 }
 ```
 
-In mode _fast_ the ic sends an interrupt when the finger has completed the following movements: single click, swipe up, swipe down, swipe left, swipe right.
+In mode _fast_ the ic sends an interrupt when the finger has completed one of the following movements: single click, swipe up, swipe down, swipe left, swipe right.
 
 Touch response is fast because there is no need to wait to distinguish between single click, double click and long press.
 
