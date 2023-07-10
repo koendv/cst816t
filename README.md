@@ -130,7 +130,6 @@ Arduino libraries for ST7789 tft driver:
 - [ST7789-STM32](https://github.com/Floyd-Fish/ST7789-STM32)
 - [ST7789-STM32-uGUI](https://github.com/deividAlfa/ST7789-STM32-uGUI)
 
-
 [Schematic](extras/Schematic_drawing_2023-06-21.pdf
 ) for the P169H002-CTP display. VCC = 3.3V. The ambient light sensor is used to set display intensity.
 
