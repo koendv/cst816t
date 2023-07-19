@@ -106,7 +106,7 @@ void loop() {
 
 ## Examples
 
-The library comes with three example Arduino sketches: touchme, smartwatch, and lvgl.
+The library comes with three example Arduino sketches: touchme, smartwatch, and lvgl. To compile the examples, use [stm32duino](https://github.com/stm32duino/Arduino_Core_STM32/wiki).
 
 ### touchme
 
