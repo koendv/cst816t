@@ -3,7 +3,16 @@
 [![cst816t touch screen](extras/P169H002-CTP-small.jpg)](https://github.com/koendv/cst816t/raw/master/extras/P169H002-CTP.jpg)
 
 
-This is an Arduino library for the cst816t capacitive touch ic.  The cst816t capacitive touch ic is able to decode clicks, double clicks, swipes and long press in hardware.
+This is an Arduino library for the cst816t capacitive touch ic.  The cst816t capacitive touch ic is able to decode clicks, double clicks, swipes and long press in hardware. Tested on stm32duino.
+
+The cst816t runs on voltages from 1.8V to 3.3V.  Do not connect the cst816t to 5V arduinos  such as Arduino UNO. Connecting the cst816t to 5V will probably damage the device.
+
+Hardware requirements:
+
+- power supply 2.8V to 3.6V
+- power supply ripple <= 50mv;
+- logic level 1.8V to 3.3V
+- i2c rate 10Khz to 400Khz
 
 ## Use
 
