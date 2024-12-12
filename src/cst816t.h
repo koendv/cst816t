@@ -44,7 +44,7 @@ public:
   uint16_t x;
   uint16_t y;
 private:
-  TwoWire wire;
+  TwoWire& wire;
   int8_t rst;
   int8_t irq;
   uint8_t i2c_read(uint16_t addr, uint8_t reg_addr, uint8_t *reg_data, uint32_t length);
