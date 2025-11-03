@@ -56,7 +56,8 @@ cst816t::cst816t(TwoWire &_wire, int8_t _rst, int8_t _irq)
 
 void cst816t::begin(touchpad_mode tp_mode) {
   uint8_t dta[4];
-  pinMode(irq, INPUT);
+  if (irq >= 0)
+	pinMode(irq, INPUT_PULLUP);
   if (rst >= 0) {
     pinMode(rst, OUTPUT);
     digitalWrite(rst, HIGH);
@@ -94,14 +95,18 @@ void cst816t::begin(touchpad_mode tp_mode) {
   i2c_write(CST816T_ADDRESS, REG_IRQ_CTL, &irq_en, 1);
   i2c_write(CST816T_ADDRESS, REG_MOTION_MASK, &motion_mask, 1);
 
-  attachInterrupt(digitalPinToInterrupt(irq), tp_isr, FALLING);
+  if (irq >= 0)
+    attachInterrupt(digitalPinToInterrupt(irq), tp_isr, FALLING);
 
   // disable auto sleep
-  uint8_t dis_auto_sleep = 0xFF;
-  i2c_write(CST816T_ADDRESS, REG_DIS_AUTOSLEEP, &dis_auto_sleep, 1);
+  if (chip_id != CHIPID_CST716) {
+    uint8_t dis_auto_sleep = 0xFF;
+    i2c_write(CST816T_ADDRESS, REG_DIS_AUTOSLEEP, &dis_auto_sleep, 1);
+  }
 }
 
 bool cst816t::available() {
+  static uint8_t sOldDat[6];
   uint8_t dta[6];
   if (tp_event && !i2c_read(CST816T_ADDRESS, REG_GESTURE_ID, dta, sizeof(dta))) {
     tp_event = false;
@@ -110,6 +115,16 @@ bool cst816t::available() {
     x = (((uint16_t)dta[2] & 0x0f) << 8) | (uint16_t)dta[3];
     y = (((uint16_t)dta[4] & 0x0f) << 8) | (uint16_t)dta[5];
     return true;
+  }
+  else if ((irq < 0) && !i2c_read(CST816T_ADDRESS, REG_GESTURE_ID, dta, sizeof(dta))) {
+    if (memcmp(dta, sOldDat, sizeof(sOldDat)) != 0) {
+      memcpy(sOldDat, dta, sizeof(sOldDat));
+      gesture_id = dta[0];
+      finger_num = dta[1];
+      x = (((uint16_t)dta[2] & 0x0f) << 8) | (uint16_t)dta[3];
+      y = (((uint16_t)dta[4] & 0x0f) << 8) | (uint16_t)dta[5];
+      return true;
+    }
   }
   return false;
 }
